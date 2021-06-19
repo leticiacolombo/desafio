@@ -15,8 +15,8 @@ class UserController extends Controller
         $data = $request->only('name', 'cpf', 'type', 'email', 'password', 'password_confirmation');
 
         $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'max:100', 'unique:users'],
-            'cpf' => ['required', 'digits:11'],
+            'name' => ['required', 'string', 'max:100'],
+            'cpf' => ['required', 'digits:11', 'unique:users'],
             'type' => ['required', Rule::in(['L', 'U'])],
             'email' => ['required', 'string', 'email', 'max:200', 'unique:users'],
             'password' => ['required', 'string', 'min:4', 'confirmed']
