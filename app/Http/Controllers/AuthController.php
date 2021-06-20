@@ -24,7 +24,7 @@ class AuthController extends Controller
         $token = JWTAuth::attempt($data);
 
         if (!$token) {
-            return response()->json(['error' => 'Usuário ou senha incorretos!'], 401);
+            return response()->json(['error' => 'Usuário ou senha incorretos!'], 400);
         } else {
             return $this->getTokenResponse($token);
         }

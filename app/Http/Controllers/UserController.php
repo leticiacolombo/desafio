@@ -23,7 +23,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response($validator->messages(), 500);
+            return response($validator->messages(), 400);
         }
 
         $user = new User;

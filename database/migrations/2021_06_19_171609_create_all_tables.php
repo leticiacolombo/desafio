@@ -29,7 +29,7 @@ class CreateAllTables extends Migration
             $table->unsignedBigInteger('payer');
             $table->unsignedBigInteger('payee');
             $table->decimal('value', 8, 2);
-            $table->dateTime('created_at');
+            $table->dateTime('dt_transaction');
 
         });
 

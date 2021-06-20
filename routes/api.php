@@ -16,8 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/user', 'UserController@store');
 Route::post('/login', 'AuthController@login');
-Route::middleware('jwt.auth')->post('/logout', 'AuthController@logout');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('jwt.auth')->group(function() {
+    Route::post('/logout', 'AuthController@logout');
+
+    /* Transactions */
+    Route::post('/transaction', 'TransactionController@store');
+
 });
