@@ -12,11 +12,11 @@ use App\Models\User;
 class UserController extends Controller
 {
     public function store(Request $request) {
-        $data = $request->only('name', 'cpf', 'type', 'email', 'password', 'password_confirmation');
+        $data = $request->only('name', 'cpf_cnpj', 'type', 'email', 'password', 'password_confirmation');
 
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:100'],
-            'cpf' => ['required', 'digits:11', 'unique:users'],
+            'cpf_cnpj' => ['required', 'unique:users'],
             'type' => ['required', Rule::in(['L', 'U'])],
             'email' => ['required', 'string', 'email', 'max:200', 'unique:users'],
             'password' => ['required', 'string', 'min:4', 'confirmed']
@@ -28,7 +28,7 @@ class UserController extends Controller
 
         $user = new User;
         $user->name = $data['name'];
-        $user->cpf = $data['cpf'];
+        $user->cpf_cnpj = $data['cpf_cnpj'];
         $user->type = $data['type'];
         $user->email = $data['email'];
         $user->password = Hash::make($data['password']);

@@ -16,11 +16,11 @@ class CreateAllTables extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->string('cpf', 11);
+            $table->string('cpf_cnpj', 20);
             $table->string('email', 100);
             $table->string('password', 200);
             $table->enum('type', ['L', 'U']);
-            $table->decimal('balance', 8, 2)->default(0);
+            $table->decimal('balance', 8, 2)->default(1000);
             $table->string('token', 200)->nullable();
         });
 

@@ -37,6 +37,10 @@ class TransactionController extends Controller
             $payer = User::find($loggedUser->id);
             $payee = User::find($data['payee']);
             if ($payee) {
+                if ($payer==$payee) {
+                    return response()->json(['message' => "Você não pode enviar dinheiro para você mesmo! ):"], 422);
+                }
+
                 $transaction = new Transaction;
                 $transaction->payer = $loggedUser->id;
                 $transaction->payee = $payee->id;
@@ -54,14 +58,17 @@ class TransactionController extends Controller
 
                         $payee->balance = (float) $payee->balance + (float) $data['value'];
                         $payee->save();
+
+                        $this->mock->notify();
+                        return response()->json(['message' => "Transação efetuada com sucesso!"], 200);
                     } else {
-                        return response()->json(['message' => "Unauthorized Service!"], 401);
+                        return response()->json(['message' => "Serviço não autorizado!"], 401);
                     }
                 } else {
-                    return response()->json(['message' => "Saldo insuficiente!"], 500);
+                    return response()->json(['message' => "Saldo insuficiente!"], 422);
                 }
             } else {
-                return response()->json(['message' => "Usuário não encontrado!"], 500);
+                return response()->json(['message' => "Usuário não encontrado!"], 422);
             }
         }
     }

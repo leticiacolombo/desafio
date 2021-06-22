@@ -22,7 +22,11 @@ class Mock {
         $response = Http::get(config('constants.MOCK_NOTIFY'));
 
         if ($response->status()==200) {
-            return $response->json();
+            if (isset($authorization['message'])) {
+                return strtolower($authorization['message'])=='success';
+            }
         }
+
+        return false;
     }
 }
